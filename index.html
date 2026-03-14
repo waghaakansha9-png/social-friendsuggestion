@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🌐 Social Friend Suggestion 🌐</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    <link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Social Friend Suggestion 🌐</h1>
+        <p style="color: #fff;">Logged in as: <b>{{ current_user }}</b> | <a href="/logout" style="color: yellow;">Logout</a></p>
+
+        <div class="form-container">
+            <h2>➕ Add User</h2>
+            <form action="/add_user" method="post">
+                <input type="text" name="user" placeholder="Enter user name" required>
+                <button type="submit">Add User</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <h2>🤝 Add Friendship</h2>
+            <form action="/add_friend" method="post">
+                <input type="text" name="user1" placeholder="User 1" required>
+                <input type="text" name="user2" placeholder="User 2" required>
+                <button type="submit">Add Friend</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <h2>🔮 Suggest Friends</h2>
+            <form action="/suggestions" method="post">
+                <input type="text" name="user" placeholder="Enter user name" required>
+                <button type="submit">Show Suggestions</button>
+            </form>
+        </div>
+
+        <div class="network-container">
+            <h2>🌐 Social Network Graph</h2>
+            <div id="mynetwork"></div>
+        </div>
+
+        <div class="suggestions">
+            <h2>✨ Friend Suggestions ✨</h2>
+            <ul>
+                {% for user, score in suggestions %}
+                    <li>💡 {{user}} ({{score}} mutual friends)</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="users-list">
+            <h2>📋 Users & Friends</h2>
+            <ul>
+                {% for user, friends in graph.items() %}
+                    <li>👤 <b>{{user}}</b> → {{friends}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
